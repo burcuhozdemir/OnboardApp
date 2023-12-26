@@ -1,13 +1,5 @@
 import React, {useState} from 'react';
-import {
-  View,
-  Text,
-  SafeAreaView,
-  ScrollView,
-  Image,
-  ImageURISource,
-  Pressable,
-} from 'react-native';
+import {View, Text, Image, Pressable} from 'react-native';
 import globalStyle from '../../../assets/styles/main';
 import style from './style';
 import {FontAwesomeIcon} from '@fortawesome/react-native-fontawesome';
@@ -64,20 +56,30 @@ const OnboardingScreen = () => {
       </View>
 
       <View style={style.container}>
-        <Image
-          source={data.image}
-          style={{height: 300, resizeMode: 'contain'}}
-        />
+        <Image source={data.image} style={style.image} />
         <Text style={style.titleText}>{data.title}</Text>
         <Text style={style.subTitleText}>{data.description}</Text>
       </View>
-      <View style={{marginTop: 'auto'}}>
+      <View style={style.footer}>
         <View style={style.buttonRows}>
           <Text onPress={endBoarding} style={style.buttonTextBlack}>
             Skip
           </Text>
-          <Pressable onPress={onContinue} style={style.button}>
-            <Text style={style.buttonTextWhite}>Next</Text>
+          <View style={style.stepIndicatorContainer}>
+            {onBoardingSteps.map((step, index) => (
+              <View
+                style={[
+                  style.stepIndicator,
+                  {
+                    backgroundColor:
+                      index == screenIndex ? '#037EEE' : '#AEC5E5',
+                  },
+                ]}
+              />
+            ))}
+          </View>
+          <Pressable onPress={onContinue}>
+            <Text style={style.buttonTextBlack}>Next</Text>
           </Pressable>
         </View>
       </View>

@@ -32,6 +32,7 @@ const style = StyleSheet.create({
     gap: 5,
     marginTop: 'auto',
   },
+  image: {height: 300, resizeMode: 'contain'},
   titleText: {
     fontFamily: 'Mulish-Bold',
     fontSize: 26,
@@ -49,22 +50,21 @@ const style = StyleSheet.create({
     justifyContent: 'space-between',
     paddingVertical: 20,
     alignItems: 'center',
-  },
-  buttonTextWhite: {
-    fontFamily: 'Mulish-Light',
-    fontSize: 14,
-    color: '#FFFFFF',
+    marginBottom: verticalScale(10),
   },
   buttonTextBlack: {
     fontFamily: 'Mulish-Light',
     fontSize: 14,
     color: '#000000',
   },
-  button: {
-    backgroundColor: '#037EEE',
-    borderRadius: 15,
-    padding: 15,
+  stepIndicatorContainer: {flexDirection: 'row', gap: 10},
+  stepIndicator: {
+    width: 10,
+    height: 10,
+    borderRadius: 10,
+    backgroundColor: '#AEC5E5',
   },
+  footer: {marginTop: 'auto'},
 });
 
 export default style;
