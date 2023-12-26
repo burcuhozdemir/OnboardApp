@@ -1,11 +1,7 @@
 import React from 'react';
-import {SafeAreaView, Text} from 'react-native';
+import OnboardingScreen from './src/screens/onboarding/OnboardingScreen';
 const App = () => {
-  return (
-    <SafeAreaView>
-      <Text>Onboarding App</Text>
-    </SafeAreaView>
-  );
+  return <OnboardingScreen />;
 };
 
 export default App;
