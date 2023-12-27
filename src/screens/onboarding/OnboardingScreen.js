@@ -13,6 +13,8 @@ import Animated, {
   SlideInRight,
   SlideOutLeft,
 } from 'react-native-reanimated';
+import {useNavigation} from '@react-navigation/native';
+import {setItem} from '../../../utils/asyncStorage';
 
 const onBoardingSteps = [
   {
@@ -36,6 +38,7 @@ const onBoardingSteps = [
 ];
 
 const OnboardingScreen = () => {
+  const navigation = useNavigation();
   const [screenIndex, setScreenIndex] = useState(0);
   const data = onBoardingSteps[screenIndex];
 
@@ -59,7 +62,8 @@ const OnboardingScreen = () => {
 
   const endBoarding = () => {
     setScreenIndex(0);
-    console.log('router back');
+    setItem('onboarded', '1');
+    navigation.navigate('Home');
   };
 
   const swipes = Gesture.Simultaneous(
