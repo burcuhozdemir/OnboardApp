@@ -1,9 +1,18 @@
 import React, {useState} from 'react';
-import {View, Text, Image, Pressable} from 'react-native';
+import {View, Text, Pressable} from 'react-native';
 import globalStyle from '../../../assets/styles/main';
 import style from './style';
-import {FontAwesomeIcon} from '@fortawesome/react-native-fontawesome';
-import {faCartShopping} from '@fortawesome/free-solid-svg-icons';
+import {
+  Directions,
+  Gesture,
+  GestureDetector,
+} from 'react-native-gesture-handler';
+import Animated, {
+  FadeIn,
+  FadeOut,
+  SlideInRight,
+  SlideOutLeft,
+} from 'react-native-reanimated';
 
 const onBoardingSteps = [
   {
@@ -39,51 +48,77 @@ const OnboardingScreen = () => {
     }
   };
 
+  const onBack = () => {
+    const isLastScreen = screenIndex == 0;
+    if (isLastScreen) {
+      endBoarding();
+    } else {
+      setScreenIndex(screenIndex - 1);
+    }
+  };
+
   const endBoarding = () => {
     setScreenIndex(0);
     console.log('router back');
   };
 
-  return (
-    <View style={[globalStyle.backgroundWhite, globalStyle.flex]}>
-      <View style={style.topTitleArea}>
-        <FontAwesomeIcon icon={faCartShopping} size={40} color="#FFFFFF" />
-        <View style={style.lineView}>
-          <Text style={style.topTitleText}>eCommerce Shop</Text>
-        </View>
-        <Text style={style.topSubTitleText}>Professional App for your </Text>
-        <Text style={style.topSubTitleText}>eCommerce business</Text>
-      </View>
+  const swipes = Gesture.Simultaneous(
+    Gesture.Fling().direction(Directions.LEFT).onEnd(onContinue),
+    Gesture.Fling().direction(Directions.RIGHT).onEnd(onBack),
+  );
 
-      <View style={style.container}>
-        <Image source={data.image} style={style.image} />
-        <Text style={style.titleText}>{data.title}</Text>
-        <Text style={style.subTitleText}>{data.description}</Text>
-      </View>
-      <View style={style.footer}>
-        <View style={style.buttonRows}>
-          <Text onPress={endBoarding} style={style.buttonTextBlack}>
-            Skip
-          </Text>
-          <View style={style.stepIndicatorContainer}>
-            {onBoardingSteps.map((step, index) => (
-              <View
-                style={[
-                  style.stepIndicator,
-                  {
-                    backgroundColor:
-                      index == screenIndex ? '#037EEE' : '#AEC5E5',
-                  },
-                ]}
-              />
-            ))}
+  return (
+    <GestureDetector gesture={swipes}>
+      <View
+        entering={FadeIn}
+        key={screenIndex}
+        style={[globalStyle.backgroundWhite, globalStyle.flex]}>
+        <View style={style.container}>
+          <Animated.Image
+            source={data.image}
+            style={style.image}
+            entering={FadeIn}
+            exiting={FadeOut}
+          />
+          <Animated.Text
+            entering={SlideInRight}
+            exiting={SlideOutLeft}
+            style={style.titleText}>
+            {data.title}
+          </Animated.Text>
+          <Animated.Text
+            entering={SlideInRight.delay(150)}
+            exiting={SlideOutLeft}
+            style={style.subTitleText}>
+            {data.description}
+          </Animated.Text>
+        </View>
+        <View style={style.footer}>
+          <View style={style.buttonRows}>
+            <Text onPress={endBoarding} style={style.buttonTextBlack}>
+              Skip
+            </Text>
+            <View style={style.stepIndicatorContainer}>
+              {onBoardingSteps.map((step, index) => (
+                <View
+                  key={index}
+                  style={[
+                    style.stepIndicator,
+                    {
+                      backgroundColor:
+                        index == screenIndex ? '#037EEE' : '#AEC5E5',
+                    },
+                  ]}
+                />
+              ))}
+            </View>
+            <Pressable onPress={onContinue}>
+              <Text style={style.buttonTextBlack}>Next</Text>
+            </Pressable>
           </View>
-          <Pressable onPress={onContinue}>
-            <Text style={style.buttonTextBlack}>Next</Text>
-          </Pressable>
         </View>
       </View>
-    </View>
+    </GestureDetector>
   );
 };
 

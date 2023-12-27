@@ -1,30 +1,7 @@
-import {Dimensions, StyleSheet} from 'react-native';
+import {StyleSheet} from 'react-native';
 import {horizontalScale, verticalScale} from '../../../assets/styles/scaling';
 
 const style = StyleSheet.create({
-  topTitleArea: {
-    paddingHorizontal: horizontalScale(20),
-    paddingVertical: verticalScale(50),
-    backgroundColor: '#037EEE',
-  },
-  lineView: {
-    borderBottomWidth: 1,
-    borderColor: '#FFFFFF',
-    alignSelf: 'flex-start',
-    marginVertical: 10,
-  },
-  topTitleText: {
-    fontFamily: 'Mulish-Bold',
-    fontSize: 28,
-    paddingBottom: 5,
-    color: '#FFFFFF',
-  },
-  topSubTitleText: {
-    fontFamily: 'Mulish-Regular',
-    fontSize: 16,
-    lineHeight: 23,
-    color: '#FFFFFF',
-  },
   container: {
     paddingHorizontal: horizontalScale(15),
     alignItems: 'center',
